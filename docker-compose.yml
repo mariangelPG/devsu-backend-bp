@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: banking-postgres
+    environment:
+      POSTGRES_DB: banking_db
+      POSTGRES_USER: banking_user
+      POSTGRES_PASSWORD: banking_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - banking-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U banking_user -d banking_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Microservicio de Clientes
+  customer-service:
+    build:
+      context: ./ms-clientes
+      dockerfile: Dockerfile
+      args:
+        - JAVA_VERSION=21
+        - SERVICE_PORT=8081
+    container_name: customer-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: banking_db
+      DB_USERNAME: banking_user
+      DB_PASSWORD: banking_password
+      ACCOUNT_SERVICE_URL: http://account-service:8082
+      JAVA_OPTS: "-XX:+UseZGC -XX:+UnlockExperimentalVMOptions -Xms256m -Xmx512m"
+    ports:
+      - "8081:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - banking-network
+    restart: unless-stopped
+    mem_limit: 768m
+    cpus: 0.5
+
+  # Microservicio de Cuentas
+  account-service:
+    build:
+      context: ./ms-cuentas
+      dockerfile: Dockerfile
+      args:
+        - JAVA_VERSION=21
+        - SERVICE_PORT=8082
+    container_name: account-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: banking_db
+      DB_USERNAME: banking_user
+      DB_PASSWORD: banking_password
+      CUSTOMER_SERVICE_URL: http://customer-service:8081
+      JAVA_OPTS: "-XX:+UseZGC -XX:+UnlockExperimentalVMOptions -Xms256m -Xmx512m"
+    ports:
+      - "8082:8082"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - banking-network
+    restart: unless-stopped
+    mem_limit: 768m
+    cpus: 0.5
+
+networks:
+  banking-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
