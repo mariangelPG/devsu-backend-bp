@@ -41,10 +41,7 @@ CREATE TABLE customer_schema.persona (
     edad INTEGER NOT NULL CHECK (edad >= 0 AND edad <= 150),
     identificacion VARCHAR(20) NOT NULL UNIQUE,
     direccion TEXT NOT NULL,
-    telefono VARCHAR(20),
-    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    fecha_actualizacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    activo BOOLEAN DEFAULT TRUE
+    telefono VARCHAR(20) 
 );
 
 -- Tabla CLIENTE (Hereda de Persona)
@@ -52,9 +49,7 @@ CREATE TABLE customer_schema.cliente (
     cliente_id BIGSERIAL PRIMARY KEY,
     persona_id BIGINT NOT NULL REFERENCES customer_schema.persona(persona_id) ON DELETE CASCADE,
     contrasena VARCHAR(255) NOT NULL, -- Hash de la contraseña
-    estado VARCHAR(20) NOT NULL DEFAULT 'ACTIVO' CHECK (estado IN ('ACTIVO', 'INACTIVO', 'BLOQUEADO', 'SUSPENDIDO')),
-    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    fecha_actualizacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    estado BOOLEAN DEFAULT TRUE
 );
 
 -- =====================================================
@@ -92,7 +87,6 @@ CREATE TABLE account_schema.movimiento (
 -- Índices para Customer Schema
 CREATE INDEX idx_persona_identificacion ON customer_schema.persona(identificacion);
 CREATE INDEX idx_persona_nombre ON customer_schema.persona(nombre);
-CREATE INDEX idx_persona_activo ON customer_schema.persona(activo);
 
 CREATE INDEX idx_cliente_cliente_id ON customer_schema.cliente(cliente_id);
 CREATE INDEX idx_cliente_persona_id ON customer_schema.cliente(persona_id);

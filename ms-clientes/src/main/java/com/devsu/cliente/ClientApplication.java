@@ -1,4 +1,4 @@
-package com.devsu.client;
+package com.devsu.cliente;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
