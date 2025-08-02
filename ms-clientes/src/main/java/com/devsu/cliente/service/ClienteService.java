@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import java.util.Base64;
 
 import java.util.Optional;
 
@@ -24,6 +25,9 @@ public class ClienteService {
     public Cliente guardarCliente(Cliente cliente) {
         try{
             validarCliente(cliente);
+
+            cliente.setContrasena(encode(cliente.getContrasena()));
+
             Cliente clienteGuardado = clienteRepository.save(cliente);
             logger.info("Cliente guardado exitosamente con ID: {}", clienteGuardado.getClienteId());
 
@@ -38,22 +42,13 @@ public class ClienteService {
     }
 
     public Optional<Cliente> obtenerClientePorId(Long clienteId) {
-        logger.debug("Buscando cliente con ID: {}", clienteId);
-
-        if (clienteId == null || clienteId <= 0) {
-            logger.warn("ID de cliente inválido: {}", clienteId);
-            throw new ClienteValidationException("El ID del cliente debe ser un número positivo");
-        }
 
         try{
             Optional<Cliente> cliente = clienteRepository.findById(clienteId);
 
-            if (cliente.isPresent()) {
-                logger.info("Cliente encontrado con ID: {}", clienteId);
-            } else {
+            if (!cliente.isPresent()) {
                 logger.info("Cliente no encontrado con ID: {}", clienteId);
                 throw new ClienteNotFoundException("El ID no existe");
-
             }
 
             return cliente;
@@ -65,12 +60,7 @@ public class ClienteService {
     }
 
     public void eliminarCliente(Long clienteId) {
-        logger.info("Iniciando eliminación de cliente con ID: {}", clienteId);
 
-        if (clienteId == null || clienteId <= 0) {
-            logger.warn("ID de cliente inválido para eliminación: {}", clienteId);
-            throw new ClienteValidationException("El ID del cliente debe ser un número positivo");
-        }
         try{
             if (!clienteRepository.existsById(clienteId)) {
                 logger.warn("Intento de eliminar cliente inexistente con ID: {}", clienteId);
@@ -95,7 +85,6 @@ public class ClienteService {
             }
 
             ClienteDTO.llenarCliente(clienteExistente, clienteNuevo);
-
             validarCliente(clienteExistente);
 
             Cliente clienteActualizado = clienteRepository.save(clienteExistente);
@@ -110,13 +99,16 @@ public class ClienteService {
     }
 
     private void validarCliente(Cliente cliente) {
-        logger.debug("Validando datos de cliente");
 
         if (cliente == null) {
             throw new ClienteValidationException("Cliente no puede ser null");
         }
 
-        logger.debug("Validación de cliente completada exitosamente");
+    }
+
+    public String encode (String contrasena){
+        Base64.Encoder encoder = Base64.getEncoder();
+        return encoder.encodeToString(contrasena.getBytes());
     }
 
 }

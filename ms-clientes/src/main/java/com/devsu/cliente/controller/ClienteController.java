@@ -1,19 +1,24 @@
 package com.devsu.cliente.controller;
 
 
+import com.devsu.cliente.dto.ClienteDTO;
 import com.devsu.cliente.model.Cliente;
 import com.devsu.cliente.service.ClienteService;
+import jakarta.validation.*;
+import jakarta.validation.constraints.Positive;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
+@Validated
 public class ClienteController {
 
     private static final Logger logger = LoggerFactory.getLogger(ClienteController.class);
@@ -22,16 +27,15 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping
-    public ResponseEntity<Cliente> crearCliente(@RequestBody Cliente cliente) {
-        logger.info("Recibida solicitud para crear nuevo cliente");
-        logger.debug("Datos del cliente a crear: {}", cliente);
+    public ResponseEntity<Cliente> crearCliente(@Valid @RequestBody Cliente cliente) {
+        logger.info("Datos del cliente a crear: {}", cliente.toString());
 
         Cliente nuevoCliente = clienteService.guardarCliente(cliente);
         return new ResponseEntity<>(nuevoCliente, HttpStatus.CREATED);
     }
 
     @GetMapping("/{clienteId}")
-    public ResponseEntity<Cliente> obtenerCliente(@PathVariable Long clienteId) {
+    public ResponseEntity<Cliente> obtenerCliente(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId) {
 
         logger.info("Recibida solicitud para obtener cliente con ID: {}", clienteId);
 
@@ -41,7 +45,12 @@ public class ClienteController {
     }
 
     @PutMapping("/{clienteId}")
-    public ResponseEntity<Cliente> actualizarCliente(@PathVariable Long clienteId, @RequestBody Cliente clienteActualizado) {
+    public ResponseEntity<Cliente> actualizarCliente(
+            @PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId,
+            @Valid @RequestBody Cliente clienteActualizado) {
+
+        logger.info("Datos del cliente a actualizar: {}", clienteActualizado.toString());
+
         Optional<Cliente> clienteExistente = clienteService.obtenerClientePorId(clienteId);
 
         clienteActualizado.setClienteId(clienteId);
@@ -50,7 +59,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{clienteId}")
-    public ResponseEntity<Cliente> eliminarCliente(@PathVariable Long clienteId) {
+    public ResponseEntity<Cliente> eliminarCliente(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId) {
         logger.info("Recibida solicitud para eliminar cliente con ID: {}", clienteId);
 
         Cliente cliente = new Cliente();
@@ -61,13 +70,13 @@ public class ClienteController {
     }
 
     @PatchMapping("/{clienteId}")
-    public ResponseEntity<Cliente> actualizarCampo(@PathVariable Long clienteId, @RequestBody Cliente camposActualizados) {
-        logger.info("Recibida solicitud para actualización parcial de cliente con ID: {}", clienteId);
-        logger.debug("Campos a actualizar: {}", camposActualizados);
+    public ResponseEntity<Cliente> actualizarCampo(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId,
+                                                   @RequestBody ClienteDTO camposActualizados) {
+        logger.info("Recibida solicitud para actualización parcial de cliente: {}", camposActualizados.toString());
 
         Optional<Cliente> clienteExistente = clienteService.obtenerClientePorId(clienteId);
 
-        Cliente clienteGuardado = clienteService.actualizarCampos(clienteExistente.get(), camposActualizados);
+        Cliente clienteGuardado = clienteService.actualizarCampos(clienteExistente.get(), ClienteDTO.toCliente(camposActualizados));
 
         return new ResponseEntity<>(clienteGuardado, HttpStatus.OK);
     }
