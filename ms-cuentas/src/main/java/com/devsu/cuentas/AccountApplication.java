@@ -1,4 +1,4 @@
-package com.devsu.account;
+package com.devsu.cuentas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
