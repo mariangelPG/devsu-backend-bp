@@ -1,5 +1,6 @@
 package com.devsu.cuentas.controller;
 
+import ch.qos.logback.core.net.server.Client;
 import com.devsu.cuentas.model.Cuenta;
 import com.devsu.cuentas.service.CuentaService;
 import jakarta.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,24 +29,25 @@ public class CuentaController {
     @PostMapping
     public ResponseEntity<Cuenta> crearCuenta(@Valid @RequestBody Cuenta cuenta){
         logger.info("Datos de la cuenta a crear: {}", cuenta.toString());
-
-        return new ResponseEntity<>(cuenta, HttpStatus.CREATED);
+        Cuenta nuevaCuenta = cuentaService.guardarCuenta(cuenta);
+        return new ResponseEntity<>(nuevaCuenta, HttpStatus.CREATED);
     }
 
     @GetMapping("/{numeroCuenta}")
     public ResponseEntity<Cuenta> obtenerCuenta(@PathVariable @Positive(message = "El ID de la cuenta debe ser un número positivo") Long cuentaId) {
 
         logger.info("Recibida solicitud para obtener cuenta con ID: {}", cuentaId);
+        Optional<Cuenta> cuenta = cuentaService.obtenerCuentaPorId(cuentaId);
+        return new ResponseEntity<>(cuenta.get(), HttpStatus.OK);
 
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{clienteId}")
-    public ResponseEntity<Cuenta> obtenerCuentasxCliente(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId) {
+    public ResponseEntity<List<Cuenta>> obtenerCuentasxCliente(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId) {
 
         logger.info("Recibida solicitud para obtener las cuentas del cliente con ID: {}", clienteId);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Cuenta> listaCuentas = cuentaService.obtenerCuentasPorClienteId(clienteId);
+        return new ResponseEntity<>(listaCuentas, HttpStatus.OK);
     }
 
     @PutMapping("/{cuentaId}")
@@ -53,8 +56,10 @@ public class CuentaController {
             @Valid @RequestBody Cuenta cuentaActualizado) {
 
         logger.info("Datos de la cuenta a actualizar: {}", cuentaActualizado.toString());
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        Optional<Cuenta> cuentaExistente = cuentaService.obtenerCuentaPorId(cuentaId);
+        cuentaActualizado.setNumeroCuenta(cuentaId);
+        Cuenta cuentaGuardado = cuentaService.guardarCuenta(cuentaActualizado);
+        return new ResponseEntity<>(cuentaGuardado, HttpStatus.OK);
     }
 
 }

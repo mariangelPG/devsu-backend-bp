@@ -1,5 +1,6 @@
 package com.devsu.cuentas.service;
 
+import com.devsu.cuentas.exception.CuentaValidationException;
 import com.devsu.cuentas.model.Cuenta;
 import com.devsu.cuentas.repository.CuentaRepository;
 import org.slf4j.Logger;
@@ -25,12 +26,15 @@ public class CuentaService {
             logger.info("Cliente guardado exitosamente con ID: {}", cuentaGuardada.getClienteId());
 
             return cuentaGuardada;
-        }catch (DataAccessException ex){
+        } catch (CuentaValidationException ex) {
+            logger.warn("Error de validación al guardar cuenta: {}", ex.getMessage());
+            throw ex;
+        } catch (DataAccessException ex) {
             logger.error("Error de acceso a datos al guardar la cuenta: {}", ex.getMessage(), ex);
             throw new RuntimeException("Error al acceder a la base de datos", ex);
-        }catch (Exception e) {
-            logger.error("Error inesperado al guardar la cuenta: {}", e.getMessage(), e);
-            throw e;
+        } catch (Exception ex) {
+            logger.error("Error inesperado al guardar la cuenta: {}", ex.getMessage(), ex);
+            throw ex;
         }
     }
 
@@ -40,8 +44,8 @@ public class CuentaService {
             Optional<Cuenta> cuenta = cuentaRepository.findById(cuentaId);
 
             if (!cuenta.isPresent()) {
-                logger.info("Cliente no encontrado con ID: {}", cuentaId);
-                //throw new ClienteNotFoundException("El ID no existe");
+                logger.info("Cuenta no encontrado con ID: {}", cuentaId);
+                throw new CuentaValidationException("El ID de la cuenta debe ser un número positivo");
             }
             return cuenta;
         } catch (DataAccessException e) {

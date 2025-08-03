@@ -1,9 +1,8 @@
 package com.devsu.cuentas.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.Date;
 
@@ -14,10 +13,28 @@ public class Movimiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(nullable = false)
     private Date fecha;
+
+    @NotBlank(message = "El tipo de movimiento es obligatorio")
+    @Pattern(regexp = "^(Crédito|Débito|Depósito|Retiro)$",
+            message = "El tipo de movimiento debe ser 'Crédito', 'Débito', 'Depósito' o 'Retiro'")
+    @Column(nullable = false)
     private String tipo;
+
+    @NotNull(message = "El valor del movimiento es obligatorio")
+    @Positive(message = "El valor del movimiento debe ser mayor a cero")
+    @DecimalMax(value = "10000.0", message = "El valor del movimiento no puede exceder $10,000.00")
+    @Column(nullable = false)
     private Double valor;
+
+    @Column(nullable = false)
     private Double saldo;
+
+    @NotNull(message = "El ID de la cuenta es obligatorio")
+    @Positive(message = "El ID de la cuenta debe ser un número positivo")
+    @Column(nullable = false)
     private Long cuentaId;
 
     public Date getFecha() {

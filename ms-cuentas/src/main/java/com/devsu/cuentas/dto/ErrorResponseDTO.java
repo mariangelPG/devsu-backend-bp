@@ -1,10 +1,8 @@
-package com.devsu.cliente.dto;
+package com.devsu.cuentas.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.slf4j.MDC;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class ErrorResponseDTO {
 
