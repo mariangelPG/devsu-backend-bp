@@ -86,6 +86,16 @@ public class MovimientoService {
 
     }
 
+    public List<Movimiento> obtenerMovimientosPorCuentaIdFecha(Long cuentaId, Date fechaInicio, Date fechafin) {
+        try{
+            return movimientoRepository.findByCuentaIdAndFechaBetweenOrderByFechaDesc(cuentaId, fechaInicio, fechafin);
+        } catch (DataAccessException e) {
+            logger.error("Error de acceso a datos al buscar movimientos con cuenta ID {}: {}", cuentaId, e.getMessage(), e);
+            throw new RuntimeException("Error al acceder a la base de datos", e);
+        }
+
+    }
+
     public Double obtenerSaldoActual(Long cuentaId) {
         logger.debug("Obteniendo saldo actual para cuenta ID: {}", cuentaId);
 

@@ -37,6 +37,7 @@ public class Movimiento {
     @Column(nullable = false)
     private Long cuentaId;
 
+
     public Date getFecha() {
         return fecha;
     }

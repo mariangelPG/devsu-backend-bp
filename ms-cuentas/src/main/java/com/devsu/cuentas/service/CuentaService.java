@@ -57,7 +57,13 @@ public class CuentaService {
 
     public List<Cuenta> obtenerCuentasPorClienteId(Long clienteId) {
         try{
-            return cuentaRepository.findByClienteId(clienteId);
+            List<Cuenta> listaCuentas = cuentaRepository.findByClienteId(clienteId);
+
+            if (listaCuentas.isEmpty()) {
+                logger.info("Cuenta no encontrado con ID: {}", clienteId);
+                throw new CuentaNotFoundException("No se encontraron cuentas con este ID");
+            }
+            return listaCuentas;
         } catch (DataAccessException e) {
             logger.error("Error de acceso a datos al buscar cuentas con cliente ID {}: {}", clienteId, e.getMessage(), e);
             throw new RuntimeException("Error al acceder a la base de datos", e);
