@@ -40,17 +40,16 @@ RUN groupadd -r spring && useradd -r -g spring spring
 WORKDIR /app
 
 # Copiar el JAR desde el stage de build
+COPY --from=build /app/src/main/resources/application.properties ./
 COPY --from=build /app/build/libs/*.jar app.jar
+RUN mkdir logs
+RUN chown spring:spring /app/logs
 
 # Cambiar al usuario no-root
 USER spring:spring
 
 # Puerto por defecto
 EXPOSE 8081
-
-# Healthcheck
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-  CMD curl -f http://localhost:8081/actuator/health || exit 1
 
 # Ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
