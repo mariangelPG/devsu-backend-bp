@@ -29,19 +29,18 @@ public class MovimientoController {
     @PostMapping
     public ResponseEntity<Movimiento> crearMovimiento(@Valid @RequestBody Movimiento movimiento){
         logger.info("Datos del movimiento a crear: {}", movimiento.toString());
-
-        return new ResponseEntity<>(movimiento, HttpStatus.CREATED);
+        Movimiento movimientoGuardado = movimientoService.guardarMovimiento(movimiento);
+        return new ResponseEntity<>(movimientoGuardado, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{movimientoId}")
+    @GetMapping("/id/{movimientoId}")
     public ResponseEntity<Movimiento> obtenerMovimiento(@PathVariable @Positive(message = "El ID del movimiento debe ser un número positivo") Long movimientoId) {
-
         logger.info("Recibida solicitud para obtener movimiento, con cuenta con ID: {}", movimientoId);
         Optional<Movimiento> movimiento = movimientoService.obtenerMovimientoPorId(movimientoId);
         return new ResponseEntity<>(movimiento.get(), HttpStatus.OK);
     }
 
-    @GetMapping("/{numeroCuenta}")
+    @GetMapping("/cuenta/{cuentaId}")
     public ResponseEntity<List<Movimiento>> obtenerMovimientosxCuenta(@PathVariable @Positive(message = "El ID de la cuenta debe ser un número positivo") Long cuentaId) {
         logger.info("Recibida solicitud para obtener lista de movimientos, con cuenta con ID: {}", cuentaId);
         List<Movimiento> listaMovimiento = movimientoService.obtenerMovimientosPorCuentaId(cuentaId);

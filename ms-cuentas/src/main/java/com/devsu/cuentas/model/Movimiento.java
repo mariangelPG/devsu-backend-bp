@@ -18,7 +18,7 @@ public class Movimiento {
     private Date fecha;
 
     @NotBlank(message = "El tipo de movimiento es obligatorio")
-    @Pattern(regexp = "^(Crédito|Débito|Depósito|Retiro)$",
+    @Pattern(regexp = "^(Credito|Debito|Deposito|Retiro)$",
             message = "El tipo de movimiento debe ser 'Crédito', 'Débito', 'Depósito' o 'Retiro'")
     @Column(nullable = false)
     private String tipo;

@@ -2244,3 +2244,148 @@ org.springframework.http.converter.HttpMessageNotReadableException: Required req
 2025-08-02 14:42:11 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-08-02 14:42:11 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-08-02 14:42:11 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-08-04 08:52:18 [main] INFO  com.devsu.cliente.ClientApplication - Starting ClientApplication using Java 21.0.7 with PID 12967 (/home/mariangel/Documents/personal/devsu/devsu-backend-bp/ms-clientes/build/classes/java/main started by mariangel in /home/mariangel/Documents/personal/devsu/devsu-backend-bp/ms-clientes)
+2025-08-04 08:52:18 [main] DEBUG com.devsu.cliente.ClientApplication - Running with Spring Boot v3.5.4, Spring v6.2.9
+2025-08-04 08:52:18 [main] INFO  com.devsu.cliente.ClientApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-04 08:52:18 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-08-04 08:52:18 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 1 JPA repository interface.
+2025-08-04 08:52:19 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-08-04 08:52:19 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-04 08:52:19 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-08-04 08:52:19 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-04 08:52:19 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 743 ms
+2025-08-04 08:52:19 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-04 08:52:19 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.22.Final
+2025-08-04 08:52:19 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-04 08:52:19 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-08-04 08:52:19 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-08-04 08:52:19 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@64c8fcfb
+2025-08-04 08:52:19 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-08-04 08:52:19 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-04 08:52:19 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.13
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-08-04 08:52:20 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-04 08:52:20 [main] DEBUG org.hibernate.SQL - alter table if exists cliente alter column direccion set data type varchar(200)
+2025-08-04 08:52:20 [main] DEBUG org.hibernate.SQL - alter table if exists cliente alter column identificacion set data type varchar(20)
+2025-08-04 08:52:20 [main] DEBUG org.hibernate.SQL - alter table if exists cliente alter column nombre set data type varchar(100)
+2025-08-04 08:52:20 [main] DEBUG org.hibernate.SQL - alter table if exists cliente alter column contrasena set data type varchar(100)
+2025-08-04 08:52:20 [main] DEBUG org.hibernate.SQL - create sequence cliente_seq start with 1 increment by 50
+2025-08-04 08:52:20 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-08-04 08:52:20 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-04 08:52:20 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-08-04 08:52:20 [main] INFO  com.devsu.cliente.ClientApplication - Started ClientApplication in 2.729 seconds (process running for 2.931)
+2025-08-04 08:55:54 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-04 08:55:54 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-08-04 08:55:54 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-08-04 08:55:54 [http-nio-8080-exec-2] INFO  c.d.c.controller.ClienteController - Datos del cliente a crear: Cliente{nombre='Ophy Pérez', genero='Femenino', edad=28, identificacion='123456789', direccion='Calle Falsa 123', telefono='04123008494', estado=true}
+2025-08-04 08:55:54 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - select nextval('cliente_seq')
+2025-08-04 08:55:54 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - insert into cliente (contrasena,direccion,edad,estado,genero,identificacion,nombre,telefono,cliente_id) values (?,?,?,?,?,?,?,?,?)
+2025-08-04 08:55:54 [http-nio-8080-exec-2] INFO  c.d.cliente.service.ClienteService - Cliente guardado exitosamente con ID: 1
+2025-08-04 08:56:20 [http-nio-8080-exec-3] INFO  c.d.c.controller.ClienteController - Datos del cliente a crear: Cliente{nombre='Vic Garcia', genero='Masculino', edad=27, identificacion='123456789', direccion='Calle Falsa 123', telefono='04123008494', estado=true}
+2025-08-04 08:56:20 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - select nextval('cliente_seq')
+2025-08-04 08:56:20 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - insert into cliente (contrasena,direccion,edad,estado,genero,identificacion,nombre,telefono,cliente_id) values (?,?,?,?,?,?,?,?,?)
+2025-08-04 08:56:20 [http-nio-8080-exec-3] INFO  c.d.cliente.service.ClienteService - Cliente guardado exitosamente con ID: 2
+2025-08-04 08:56:43 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-08-04 08:56:43 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-08-04 08:56:43 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-08-04 08:56:43 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-08-04 08:56:43 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-08-04 09:00:31 [main] INFO  com.devsu.cliente.ClientApplication - Starting ClientApplication using Java 21.0.7 with PID 14454 (/home/mariangel/Documents/personal/devsu/devsu-backend-bp/ms-clientes/build/classes/java/main started by mariangel in /home/mariangel/Documents/personal/devsu/devsu-backend-bp/ms-clientes)
+2025-08-04 09:00:31 [main] DEBUG com.devsu.cliente.ClientApplication - Running with Spring Boot v3.5.4, Spring v6.2.9
+2025-08-04 09:00:31 [main] INFO  com.devsu.cliente.ClientApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-04 09:00:31 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-08-04 09:00:31 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30 ms. Found 1 JPA repository interface.
+2025-08-04 09:00:32 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-08-04 09:00:32 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-04 09:00:32 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-08-04 09:00:32 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-04 09:00:32 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 693 ms
+2025-08-04 09:00:32 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-04 09:00:32 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.22.Final
+2025-08-04 09:00:32 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-04 09:00:32 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-08-04 09:00:32 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-08-04 09:00:32 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@22b82ddf
+2025-08-04 09:00:32 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-08-04 09:00:32 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-04 09:00:32 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.13
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-08-04 09:00:33 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-04 09:00:33 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-08-04 09:00:33 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-04 09:00:33 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-08-04 09:00:33 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-08-04 09:00:33 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-08-04 09:00:33 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-08-04 09:00:33 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-08-04 09:00:33 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2025-08-04 09:00:54 [main] INFO  com.devsu.cliente.ClientApplication - Starting ClientApplication using Java 21.0.7 with PID 14761 (/home/mariangel/Documents/personal/devsu/devsu-backend-bp/ms-clientes/build/classes/java/main started by mariangel in /home/mariangel/Documents/personal/devsu/devsu-backend-bp/ms-clientes)
+2025-08-04 09:00:54 [main] DEBUG com.devsu.cliente.ClientApplication - Running with Spring Boot v3.5.4, Spring v6.2.9
+2025-08-04 09:00:54 [main] INFO  com.devsu.cliente.ClientApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-04 09:00:54 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-08-04 09:00:54 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 1 JPA repository interface.
+2025-08-04 09:00:55 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-08-04 09:00:55 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-04 09:00:55 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-08-04 09:00:55 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-04 09:00:55 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 692 ms
+2025-08-04 09:00:55 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-04 09:00:55 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.22.Final
+2025-08-04 09:00:55 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-04 09:00:55 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-08-04 09:00:55 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-08-04 09:00:55 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@70f4f89e
+2025-08-04 09:00:55 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-08-04 09:00:55 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-04 09:00:55 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.13
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-08-04 09:00:56 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-04 09:00:56 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-08-04 09:00:56 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-04 09:00:56 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-08-04 09:00:56 [main] INFO  com.devsu.cliente.ClientApplication - Started ClientApplication in 2.469 seconds (process running for 2.658)
+2025-08-04 09:00:59 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-04 09:00:59 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-08-04 09:00:59 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-08-04 09:00:59 [http-nio-8080-exec-2] INFO  c.d.c.controller.ClienteController - Recibida solicitud para eliminar cliente con ID: 1
+2025-08-04 09:00:59 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - select count(*) from cliente c1_0 where c1_0.cliente_id=?
+2025-08-04 09:00:59 [http-nio-8080-exec-2] WARN  c.d.cliente.service.ClienteService - Intento de eliminar cliente inexistente con ID: 1
+2025-08-04 09:00:59 [http-nio-8080-exec-2] WARN  c.d.c.e.GlobalExceptionHandler - Cliente no encontrado: Cliente con ID 1 no encontrado
+2025-08-04 09:02:55 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-08-04 09:02:55 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-08-04 09:02:55 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-08-04 09:02:55 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-08-04 09:02:55 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

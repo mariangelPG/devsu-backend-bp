@@ -33,7 +33,7 @@ public class CuentaController {
         return new ResponseEntity<>(nuevaCuenta, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{numeroCuenta}")
+    @GetMapping("/id/{cuentaId}")
     public ResponseEntity<Cuenta> obtenerCuenta(@PathVariable @Positive(message = "El ID de la cuenta debe ser un número positivo") Long cuentaId) {
 
         logger.info("Recibida solicitud para obtener cuenta con ID: {}", cuentaId);
@@ -42,7 +42,7 @@ public class CuentaController {
 
     }
 
-    @GetMapping("/{clienteId}")
+    @GetMapping("/cliente/{clienteId}")
     public ResponseEntity<List<Cuenta>> obtenerCuentasxCliente(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId) {
 
         logger.info("Recibida solicitud para obtener las cuentas del cliente con ID: {}", clienteId);

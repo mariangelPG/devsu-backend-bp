@@ -1,8 +1,6 @@
 package com.devsu.cuentas.service;
 
-import com.devsu.cuentas.exception.CuentaNotFoundException;
-import com.devsu.cuentas.exception.MovimientoValidationException;
-import com.devsu.cuentas.exception.SaldoInsuficienteException;
+import com.devsu.cuentas.exception.*;
 import com.devsu.cuentas.model.Cuenta;
 import com.devsu.cuentas.model.Movimiento;
 import com.devsu.cuentas.repository.MovimientoRepository;
@@ -38,11 +36,10 @@ public class MovimientoService {
             }
 
             movimiento.setSaldo(nuevoSaldo);
+            movimiento.setFecha(new Date());
 
             Movimiento movimientoGuardado = movimientoRepository.save(movimiento);
 
-
-            //cuentaService.actualizarSaldo(movimiento.getCuentaId(), nuevoSaldo);
 
             logger.info("Movimiento guardado exitosamente con ID: {} para cuenta ID: {}",
                     movimientoGuardado.getId(), movimientoGuardado.getCuentaId());
@@ -51,7 +48,7 @@ public class MovimientoService {
 
         } catch (MovimientoValidationException | SaldoInsuficienteException | CuentaNotFoundException ex) {
             logger.warn("Error de validación al guardar movimiento: {}", ex.getMessage());
-            throw ex; // Re-lanzar para que sea manejada por GlobalExceptionHandler
+            throw ex;
         } catch (DataAccessException ex) {
             logger.error("Error de acceso a datos al guardar el movimiento: {}", ex.getMessage(), ex);
             throw new RuntimeException("Error al acceder a la base de datos", ex);
@@ -69,7 +66,7 @@ public class MovimientoService {
 
             if (!movimiento.isPresent()) {
                 logger.info("Movimiento no encontrado con ID: {}", movimientoId);
-                //throw new ClienteNotFoundException("El ID no existe");
+                throw new MovimientoNotFoundException("El ID no existe");
             }
             return movimiento;
         } catch (DataAccessException e) {

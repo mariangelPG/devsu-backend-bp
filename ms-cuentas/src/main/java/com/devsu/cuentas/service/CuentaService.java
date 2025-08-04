@@ -1,6 +1,6 @@
 package com.devsu.cuentas.service;
 
-import com.devsu.cuentas.exception.CuentaValidationException;
+import com.devsu.cuentas.exception.*;
 import com.devsu.cuentas.model.Cuenta;
 import com.devsu.cuentas.repository.CuentaRepository;
 import org.slf4j.Logger;
@@ -45,7 +45,7 @@ public class CuentaService {
 
             if (!cuenta.isPresent()) {
                 logger.info("Cuenta no encontrado con ID: {}", cuentaId);
-                throw new CuentaValidationException("El ID de la cuenta debe ser un número positivo");
+                throw new CuentaNotFoundException("El ID de la cuenta no se encontro");
             }
             return cuenta;
         } catch (DataAccessException e) {
