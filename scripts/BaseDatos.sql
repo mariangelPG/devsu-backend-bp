@@ -35,7 +35,7 @@ GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA account_schema TO banking_user;
 
 -- Tabla PERSONA
 CREATE TABLE customer_schema.persona (
-    persona_id BIGSERIAL PRIMARY KEY,
+    persona_id BIGSERIAL PRIMARY KEY UNIQUE,
     nombre VARCHAR(100) NOT NULL,
     genero VARCHAR(20) NOT NULL CHECK (genero IN ('MASCULINO', 'FEMENINO', 'OTRO')),
     edad INTEGER NOT NULL CHECK (edad >= 0 AND edad <= 150),
@@ -46,7 +46,7 @@ CREATE TABLE customer_schema.persona (
 
 -- Tabla CLIENTE (Hereda de Persona)
 CREATE TABLE customer_schema.cliente (
-    cliente_id BIGSERIAL PRIMARY KEY,
+    cliente_id BIGSERIAL PRIMARY KEY UNIQUE,
     persona_id BIGINT NOT NULL REFERENCES customer_schema.persona(persona_id) ON DELETE CASCADE,
     contrasena VARCHAR(255) NOT NULL, -- Hash de la contraseña
     estado BOOLEAN DEFAULT TRUE
@@ -58,26 +58,21 @@ CREATE TABLE customer_schema.cliente (
 
 -- Tabla CUENTA
 CREATE TABLE account_schema.cuenta (
-    cuenta_id BIGSERIAL PRIMARY KEY,
-    numero_cuenta VARCHAR(20) NOT NULL UNIQUE,
+    numero_cuenta VARCHAR(20) NOT NULL PRIMARY KEY UNIQUE,
     tipo_cuenta VARCHAR(20) NOT NULL CHECK (tipo_cuenta IN ('AHORROS', 'CORRIENTE', 'CREDITO')),
     saldo_inicial DECIMAL(15,2) NOT NULL DEFAULT 0.00 CHECK (saldo_inicial >= 0),
-    saldo_actual DECIMAL(15,2) NOT NULL DEFAULT 0.00,
     estado VARCHAR(20) NOT NULL DEFAULT 'ACTIVA' CHECK (estado IN ('ACTIVA', 'INACTIVA', 'BLOQUEADA', 'CERRADA')),
-    cliente_id VARCHAR(50) NOT NULL, -- Referencia al client_id del microservicio de clientes
-    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    fecha_actualizacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    cliente_id VARCHAR(50) NOT NULL
 );
 
 -- Tabla MOVIMIENTOS
 CREATE TABLE account_schema.movimiento (
-    movimiento_id BIGSERIAL PRIMARY KEY,
+    movimiento_id BIGSERIAL PRIMARY KEY UNIQUE,
     cuenta_id BIGINT NOT NULL REFERENCES account_schema.cuenta(cuenta_id) ON DELETE CASCADE,
     fecha_movimiento TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     tipo_movimiento VARCHAR(30) NOT NULL CHECK (tipo_movimiento IN ('DEPOSITO', 'RETIRO', 'TRANSFERENCIA_ENTRADA', 'TRANSFERENCIA_SALIDA', 'PAGO', 'INTERES', 'COMISION')),
     valor DECIMAL(15,2) NOT NULL CHECK (valor != 0), -- Positivo para ingresos, negativo para egresos
-    saldo_anterior DECIMAL(15,2) NOT NULL,
-    saldo_posterior DECIMAL(15,2) NOT NULL,
+    saldo DECIMAL(15,2) NOT NULL
 );
 
 -- =====================================================
