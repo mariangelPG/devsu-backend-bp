@@ -3,6 +3,11 @@ package com.devsu.cuentas.controller;
 import com.devsu.cuentas.dto.ReporteDTO;
 import com.devsu.cuentas.model.Movimiento;
 import com.devsu.cuentas.service.ReporteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jdk.dynalink.linker.LinkerServices;
@@ -27,6 +32,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/reportes")
 @Validated
+@Tag(name = "Reporte Controller", description = "Endpoints de para manejo de los reportes")
 public class ReporteController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReporteController.class);
@@ -34,6 +40,13 @@ public class ReporteController {
     @Autowired
     private ReporteService reporteService;
 
+    @Operation(summary = "Obtiene el detalle de los movimientos por cuentas de un cliente", description = "Mediante un rango de fechas obtiene todas las cuentas del cliente y sus movimientos asociados'")
+    @Parameter(name = "fecha", description = "Rango de fechas para buscar los movimientos", required = true)
+    @Parameter(name = "cliente", description = "Id del cliente para buscar las cuentas del mismo", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @GetMapping
     public ResponseEntity<ReporteDTO> obtenerDetalleCuentasMovimientos(@RequestParam @NotBlank(message = "El rango de fechas es obligatorio") String fecha,
                                                                        @RequestParam @Positive(message = "El ID del cliente debe ser un número positivo") Long cliente){

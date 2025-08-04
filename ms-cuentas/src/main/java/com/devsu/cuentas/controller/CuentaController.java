@@ -3,6 +3,11 @@ package com.devsu.cuentas.controller;
 import ch.qos.logback.core.net.server.Client;
 import com.devsu.cuentas.model.Cuenta;
 import com.devsu.cuentas.service.CuentaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import org.slf4j.Logger;
@@ -19,6 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/cuentas")
 @Validated
+@Tag(name = "Cuenta Controller", description = "Endpoints de para manejo de las cuentas")
 public class CuentaController {
 
     private static final Logger logger = LoggerFactory.getLogger(CuentaController.class);
@@ -26,6 +32,11 @@ public class CuentaController {
     @Autowired
     private CuentaService cuentaService;
 
+    @Operation(summary = "Guarda una cuenta nueva", description = "Retorna la cuenta creada'")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @PostMapping
     public ResponseEntity<Cuenta> crearCuenta(@Valid @RequestBody Cuenta cuenta){
         logger.info("Datos de la cuenta a crear: {}", cuenta.toString());
@@ -33,6 +44,12 @@ public class CuentaController {
         return new ResponseEntity<>(nuevaCuenta, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Obtiene una cuenta mediante su ID", description = "Retorna la cuenta solicitada'")
+    @Parameter(name = "cuentaId", description = "ID de la cuenta a buscar", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @GetMapping("/id/{cuentaId}")
     public ResponseEntity<Cuenta> obtenerCuenta(@PathVariable @Positive(message = "El ID de la cuenta debe ser un número positivo") Long cuentaId) {
 
@@ -42,6 +59,12 @@ public class CuentaController {
 
     }
 
+    @Operation(summary = "Obtiene una cuenta mediante el ID de cliente", description = "Retorna la cuenta solicitada'")
+    @Parameter(name = "clienteId", description = "ID del cliente para buscar la cuenta", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @GetMapping("/cliente/{clienteId}")
     public ResponseEntity<List<Cuenta>> obtenerCuentasxCliente(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId) {
 
@@ -50,6 +73,12 @@ public class CuentaController {
         return new ResponseEntity<>(listaCuentas, HttpStatus.OK);
     }
 
+    @Operation(summary = "Actualiza una cuenta mediante su ID", description = "Retorna la cuenta actualizada'")
+    @Parameter(name = "cuentaId", description = "ID de la cuenta a buscar", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @PutMapping("/{cuentaId}")
     public ResponseEntity<Cuenta> actualizarCuenta(
             @PathVariable @Positive(message = "El ID de la cuenta debe ser un número positivo") Long cuentaId,

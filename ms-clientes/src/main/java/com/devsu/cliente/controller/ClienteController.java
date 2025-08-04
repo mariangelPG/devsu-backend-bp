@@ -4,6 +4,11 @@ package com.devsu.cliente.controller;
 import com.devsu.cliente.dto.ClienteDTO;
 import com.devsu.cliente.model.Cliente;
 import com.devsu.cliente.service.ClienteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.*;
 import jakarta.validation.constraints.Positive;
 import org.slf4j.Logger;
@@ -19,6 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/clientes")
 @Validated
+@Tag(name = "Cliente Controller", description = "Endpoints de para clientes")
 public class ClienteController {
 
     private static final Logger logger = LoggerFactory.getLogger(ClienteController.class);
@@ -26,6 +32,11 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
+    @Operation(summary = "Guarda un cliente nuevo", description = "Retorna el cliente creado'")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @PostMapping
     public ResponseEntity<Cliente> crearCliente(@Valid @RequestBody Cliente cliente) {
         logger.info("Datos del cliente a crear: {}", cliente.toString());
@@ -34,6 +45,12 @@ public class ClienteController {
         return new ResponseEntity<>(nuevoCliente, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Obtiene un cliente mediante un ID", description = "Retorna el cliente solicitado'")
+    @Parameter(name = "clienteId", description = "ID del cliente a buscar", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @GetMapping("/{clienteId}")
     public ResponseEntity<Cliente> obtenerCliente(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId) {
 
@@ -44,6 +61,12 @@ public class ClienteController {
         return new ResponseEntity<>(cliente.get(), HttpStatus.OK);
     }
 
+    @Operation(summary = "Actualiza todo un cliente mediante el ID", description = "Se le debe pasar todos los datos del cliente'")
+    @Parameter(name = "clienteId", description = "ID del cliente a actualizar", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @PutMapping("/{clienteId}")
     public ResponseEntity<Cliente> actualizarCliente(
             @PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId,
@@ -58,6 +81,12 @@ public class ClienteController {
         return new ResponseEntity<>(clienteGuardado, HttpStatus.OK);
     }
 
+    @Operation(summary = "Elimina a un cliente mediante el ID", description = "Retorna el ID del cliente eliminado'")
+    @Parameter(name = "clienteId", description = "ID del cliente a eliminar", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @DeleteMapping("/{clienteId}")
     public ResponseEntity<Cliente> eliminarCliente(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId) {
         logger.info("Recibida solicitud para eliminar cliente con ID: {}", clienteId);
@@ -69,6 +98,12 @@ public class ClienteController {
         return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 
+    @Operation(summary = "Actualiza parcialmente a un cliente mediante el ID", description = "Se le pueden enviar solo los campos a actualizar'")
+    @Parameter(name = "clienteId", description = "ID del cliente a actualizar", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @PatchMapping("/{clienteId}")
     public ResponseEntity<Cliente> actualizarCampo(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId,
                                                    @RequestBody ClienteDTO camposActualizados) {
