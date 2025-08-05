@@ -1,6 +1,7 @@
 package com.devsu.cliente.service;
 
 import com.devsu.cliente.dto.ClienteDTO;
+import com.devsu.cliente.dto.SuccessResponseDTO;
 import com.devsu.cliente.exception.ClienteNotFoundException;
 import com.devsu.cliente.exception.ClienteValidationException;
 import com.devsu.cliente.model.Cliente;
@@ -27,8 +28,9 @@ public class ClienteService {
      * @param cliente
      * @return objeto cliente
      */
-    public Cliente guardarCliente(Cliente cliente) {
+    public SuccessResponseDTO guardarCliente(Cliente cliente) {
         try{
+            SuccessResponseDTO respuesta = new SuccessResponseDTO();
             validarCliente(cliente);
 
             cliente.setContrasena(encode(cliente.getContrasena()));
@@ -36,7 +38,9 @@ public class ClienteService {
             Cliente clienteGuardado = clienteRepository.save(cliente);
             logger.info("Cliente guardado exitosamente con ID: {}", clienteGuardado.getClienteId());
 
-            return clienteGuardado;
+            respuesta.setMensaje("Cliente guardado exitosamente con ID: "+ clienteGuardado.getClienteId());
+            respuesta.setEstado(true);
+            return respuesta;
         }catch (DataAccessException ex){
             logger.error("Error de acceso a datos al guardar cliente: {}", ex.getMessage(), ex);
             throw new RuntimeException("Error al acceder a la base de datos", ex);
@@ -96,9 +100,11 @@ public class ClienteService {
      * @param clienteNuevo
      * @return
      */
-    public Cliente actualizarCampos(Cliente clienteExistente, Cliente clienteNuevo){
+    public SuccessResponseDTO actualizarCampos(Cliente clienteExistente, Cliente clienteNuevo){
 
         try{
+            SuccessResponseDTO respuesta = new SuccessResponseDTO();
+
             if (clienteExistente == null || clienteNuevo == null) {
                 logger.error("El cliente enviado, o el cliente existente es null en actualizarCampos");
                 throw new ClienteValidationException("Cliente no puede ser null");
@@ -110,7 +116,9 @@ public class ClienteService {
             Cliente clienteActualizado = clienteRepository.save(clienteExistente);
             logger.info("Cliente actualizado exitosamente con ID: {}", clienteActualizado.getClienteId());
 
-            return clienteActualizado;
+            respuesta.setMensaje("Cliente actualizado exitosamente con ID: "+ clienteNuevo.getClienteId());
+            respuesta.setEstado(true);
+            return respuesta;
 
         }catch (DataAccessException e){
             logger.error("Error de acceso a datos al actualizar cliente ID {}: {}", clienteExistente.getClienteId(), e.getMessage(), e);

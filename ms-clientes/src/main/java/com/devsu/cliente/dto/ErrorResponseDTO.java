@@ -28,7 +28,6 @@ public class ErrorResponseDTO {
         this.ruta = ruta;
     }
 
-    // Builder pattern para facilitar la creación
     public static Builder builder() {
         return new Builder();
     }

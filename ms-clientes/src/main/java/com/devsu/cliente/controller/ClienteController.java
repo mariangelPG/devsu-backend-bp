@@ -2,6 +2,7 @@ package com.devsu.cliente.controller;
 
 
 import com.devsu.cliente.dto.ClienteDTO;
+import com.devsu.cliente.dto.SuccessResponseDTO;
 import com.devsu.cliente.model.Cliente;
 import com.devsu.cliente.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,11 +39,11 @@ public class ClienteController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PostMapping
-    public ResponseEntity<Cliente> crearCliente(@Valid @RequestBody Cliente cliente) {
+    public ResponseEntity<SuccessResponseDTO> crearCliente(@Valid @RequestBody Cliente cliente) {
         logger.info("Datos del cliente a crear: {}", cliente.toString());
 
-        Cliente nuevoCliente = clienteService.guardarCliente(cliente);
-        return new ResponseEntity<>(nuevoCliente, HttpStatus.CREATED);
+        SuccessResponseDTO respuesta = clienteService.guardarCliente(cliente);
+        return new ResponseEntity<>(respuesta, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Obtiene un cliente mediante un ID", description = "Retorna el cliente solicitado'")
@@ -68,7 +69,7 @@ public class ClienteController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PutMapping("/{clienteId}")
-    public ResponseEntity<Cliente> actualizarCliente(
+    public ResponseEntity<SuccessResponseDTO> actualizarCliente(
             @PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId,
             @Valid @RequestBody Cliente clienteActualizado) {
 
@@ -77,7 +78,7 @@ public class ClienteController {
         Optional<Cliente> clienteExistente = clienteService.obtenerClientePorId(clienteId);
 
         clienteActualizado.setClienteId(clienteId);
-        Cliente clienteGuardado = clienteService.guardarCliente(clienteActualizado);
+        SuccessResponseDTO clienteGuardado = clienteService.guardarCliente(clienteActualizado);
         return new ResponseEntity<>(clienteGuardado, HttpStatus.OK);
     }
 
@@ -88,14 +89,13 @@ public class ClienteController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @DeleteMapping("/{clienteId}")
-    public ResponseEntity<Cliente> eliminarCliente(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId) {
+    public ResponseEntity<SuccessResponseDTO> eliminarCliente(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId) {
         logger.info("Recibida solicitud para eliminar cliente con ID: {}", clienteId);
 
         Cliente cliente = new Cliente();
         cliente.setClienteId(clienteId);
         clienteService.eliminarCliente(clienteId);
-
-        return new ResponseEntity<>(cliente, HttpStatus.OK);
+        return new ResponseEntity<>(new SuccessResponseDTO("Cliente eliminado con ID: "+ clienteId, true), HttpStatus.OK);
     }
 
     @Operation(summary = "Actualiza parcialmente a un cliente mediante el ID", description = "Se le pueden enviar solo los campos a actualizar'")
@@ -105,13 +105,13 @@ public class ClienteController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PatchMapping("/{clienteId}")
-    public ResponseEntity<Cliente> actualizarCampo(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId,
+    public ResponseEntity<SuccessResponseDTO> actualizarCampo(@PathVariable @Positive(message = "El ID del cliente debe ser un número positivo") Long clienteId,
                                                    @RequestBody ClienteDTO camposActualizados) {
         logger.info("Recibida solicitud para actualización parcial de cliente: {}", camposActualizados.toString());
 
         Optional<Cliente> clienteExistente = clienteService.obtenerClientePorId(clienteId);
 
-        Cliente clienteGuardado = clienteService.actualizarCampos(clienteExistente.get(), ClienteDTO.toCliente(camposActualizados));
+        SuccessResponseDTO clienteGuardado = clienteService.actualizarCampos(clienteExistente.get(), ClienteDTO.toCliente(camposActualizados));
 
         return new ResponseEntity<>(clienteGuardado, HttpStatus.OK);
     }

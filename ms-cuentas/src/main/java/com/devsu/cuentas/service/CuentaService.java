@@ -27,6 +27,7 @@ public class CuentaService {
      */
     public Cuenta guardarCuenta(Cuenta cuenta) {
         try{
+
             Cuenta cuentaGuardada = cuentaRepository.save(cuenta);
             logger.info("Cliente guardado exitosamente con ID: {}", cuentaGuardada.getClienteId());
 

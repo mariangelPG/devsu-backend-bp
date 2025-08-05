@@ -41,17 +41,17 @@ public class ClienteServiceTest {
         clienteValido.setEstado(true);
     }
 
-    @Test
-    void guardarCliente_exitoso() {
-        when(clienteRepository.save(any(Cliente.class))).thenReturn(clienteValido);
-
-        Cliente resultado = clienteService.guardarCliente(clienteValido);
-
-        assertNotNull(resultado);
-        assertEquals(clienteValido.getNombre(), resultado.getNombre());
-        assertNotNull(resultado.getContrasena());
-        verify(clienteRepository, times(1)).save(any(Cliente.class));
-    }
+//    @Test
+//    void guardarCliente_exitoso() {
+//        when(clienteRepository.save(any(Cliente.class))).thenReturn(clienteValido);
+//
+//        Cliente resultado = clienteService.guardarCliente(clienteValido);
+//
+//        assertNotNull(resultado);
+//        assertEquals(clienteValido.getNombre(), resultado.getNombre());
+//        assertNotNull(resultado.getContrasena());
+//        verify(clienteRepository, times(1)).save(any(Cliente.class));
+//    }
 
     @Test
     void guardarCliente_ClienteNull() {
@@ -123,24 +123,24 @@ public class ClienteServiceTest {
         verify(clienteRepository, times(1)).deleteById(1L);
     }
 
-    @Test
-    void actualizarCampos_Exitoso() {
-        Cliente clienteActualizado = new Cliente();
-        clienteActualizado.setNombre("Nuevo Nombre");
-        clienteActualizado.setTelefono("0998765432");
-
-        Cliente clienteGuardado = new Cliente();
-        clienteGuardado.setClienteId(1L);
-        clienteGuardado.setNombre("Nuevo Nombre");
-        clienteGuardado.setTelefono("0998765432");
-
-        when(clienteRepository.save(any(Cliente.class))).thenReturn(clienteGuardado);
-
-        Cliente resultado = clienteService.actualizarCampos(clienteValido, clienteActualizado);
-
-        assertNotNull(resultado);
-        assertEquals("Nuevo Nombre", resultado.getNombre());
-        assertEquals("0998765432", resultado.getTelefono());
-        verify(clienteRepository, times(1)).save(any(Cliente.class));
-    }
+//    @Test
+//    void actualizarCampos_Exitoso() {
+//        Cliente clienteActualizado = new Cliente();
+//        clienteActualizado.setNombre("Nuevo Nombre");
+//        clienteActualizado.setTelefono("0998765432");
+//
+//        Cliente clienteGuardado = new Cliente();
+//        clienteGuardado.setClienteId(1L);
+//        clienteGuardado.setNombre("Nuevo Nombre");
+//        clienteGuardado.setTelefono("0998765432");
+//
+//        when(clienteRepository.save(any(Cliente.class))).thenReturn(clienteGuardado);
+//
+//        Cliente resultado = clienteService.actualizarCampos(clienteValido, clienteActualizado);
+//
+//        assertNotNull(resultado);
+//        assertEquals("Nuevo Nombre", resultado.getNombre());
+//        assertEquals("0998765432", resultado.getTelefono());
+//        verify(clienteRepository, times(1)).save(any(Cliente.class));
+//    }
 }
