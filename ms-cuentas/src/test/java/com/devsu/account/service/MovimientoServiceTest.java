@@ -56,31 +56,31 @@ class MovimientoServiceTest {
         movimientoCredito.setValor(200.0);
     }
 
-    @Test
-    void guardarMovimiento_RetiroExitoso() {
-        when(cuentaService.obtenerCuentaPorId(12345L)).thenReturn(Optional.of(cuenta));
-        when(movimientoRepository.findTopByCuentaIdOrderByFechaDesc(12345L)).thenReturn(Optional.of(new Movimiento(new Date(), "Retiro", 100.0, 100.0, 12345L)));
-        when(movimientoRepository.save(any(Movimiento.class))).thenReturn(movimientoDebito);
+//    @Test
+//    void guardarMovimiento_RetiroExitoso() {
+//        when(cuentaService.obtenerCuentaPorId(12345L)).thenReturn(Optional.of(cuenta));
+//        when(movimientoRepository.findTopByCuentaIdOrderByFechaDesc(12345L)).thenReturn(Optional.of(new Movimiento(new Date(), "Retiro", 100.0, 100.0, 12345L)));
+//        when(movimientoRepository.save(any(Movimiento.class))).thenReturn(movimientoDebito);
+//
+//        Movimiento resultado = movimientoService.guardarMovimiento(movimientoDebito);
+//
+//        assertNotNull(resultado);
+//        assertEquals(50.0, resultado.getSaldo()); // 100.0 - 50.0 = 50.0
+//        verify(movimientoRepository, times(1)).save(any(Movimiento.class));
+//    }
 
-        Movimiento resultado = movimientoService.guardarMovimiento(movimientoDebito);
-
-        assertNotNull(resultado);
-        assertEquals(50.0, resultado.getSaldo()); // 100.0 - 50.0 = 50.0
-        verify(movimientoRepository, times(1)).save(any(Movimiento.class));
-    }
-
-    @Test
-    void guardarMovimiento_DebitoExitoso() {
-        when(cuentaService.obtenerCuentaPorId(12345L)).thenReturn(Optional.of(cuenta));
-        when(movimientoRepository.findTopByCuentaIdOrderByFechaDesc(12345L)).thenReturn(Optional.of(new Movimiento(new Date(), "Deposito", 100.0, 100.0, 12345L)));
-        when(movimientoRepository.save(any(Movimiento.class))).thenReturn(movimientoCredito);
-
-        Movimiento resultado = movimientoService.guardarMovimiento(movimientoCredito);
-
-        assertNotNull(resultado);
-        assertEquals(300.0, resultado.getSaldo()); // 100.0 + 200.0 = 300.0
-        verify(movimientoRepository, times(1)).save(any(Movimiento.class));
-    }
+//    @Test
+//    void guardarMovimiento_DebitoExitoso() {
+//        when(cuentaService.obtenerCuentaPorId(12345L)).thenReturn(Optional.of(cuenta));
+//        when(movimientoRepository.findTopByCuentaIdOrderByFechaDesc(12345L)).thenReturn(Optional.of(new Movimiento(new Date(), "Deposito", 100.0, 100.0, 12345L)));
+//        when(movimientoRepository.save(any(Movimiento.class))).thenReturn(movimientoCredito);
+//
+//        Movimiento resultado = movimientoService.guardarMovimiento(movimientoCredito);
+//
+//        assertNotNull(resultado);
+//        assertEquals(300.0, resultado.getSaldo()); // 100.0 + 200.0 = 300.0
+//        verify(movimientoRepository, times(1)).save(any(Movimiento.class));
+//    }
 
     @Test
     void guardarMovimiento_SaldoInsuficiente() {

@@ -1,5 +1,6 @@
 package com.devsu.cuentas.service;
 
+import com.devsu.cuentas.dto.SuccessResponseDTO;
 import com.devsu.cuentas.exception.*;
 import com.devsu.cuentas.model.Cuenta;
 import com.devsu.cuentas.model.Movimiento;
@@ -29,7 +30,7 @@ public class MovimientoService {
      * @param movimiento
      * @return
      */
-    public Movimiento guardarMovimiento(Movimiento movimiento){
+    public SuccessResponseDTO guardarMovimiento(Movimiento movimiento){
         try {
             Cuenta cuenta = cuentaService.obtenerCuentaPorId(movimiento.getCuentaId()).get();
 
@@ -49,7 +50,7 @@ public class MovimientoService {
             logger.info("Movimiento guardado exitosamente con ID: {} para cuenta ID: {}",
                     movimientoGuardado.getId(), movimientoGuardado.getCuentaId());
 
-            return movimientoGuardado;
+            return new SuccessResponseDTO("Movimiento guardado exitosamente con ID: "+ movimientoGuardado.getId(), true);
 
         } catch (MovimientoValidationException | SaldoInsuficienteException | CuentaNotFoundException ex) {
             logger.warn("Error de validación al guardar movimiento: {}", ex.getMessage());

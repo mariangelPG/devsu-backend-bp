@@ -1,6 +1,7 @@
 package com.devsu.cuentas.controller;
 
 import ch.qos.logback.core.net.server.Client;
+import com.devsu.cuentas.dto.SuccessResponseDTO;
 import com.devsu.cuentas.model.Cuenta;
 import com.devsu.cuentas.service.CuentaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,9 +39,9 @@ public class CuentaController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PostMapping
-    public ResponseEntity<Cuenta> crearCuenta(@Valid @RequestBody Cuenta cuenta){
+    public ResponseEntity<SuccessResponseDTO> crearCuenta(@Valid @RequestBody Cuenta cuenta){
         logger.info("Datos de la cuenta a crear: {}", cuenta.toString());
-        Cuenta nuevaCuenta = cuentaService.guardarCuenta(cuenta);
+        SuccessResponseDTO nuevaCuenta = cuentaService.guardarCuenta(cuenta);
         return new ResponseEntity<>(nuevaCuenta, HttpStatus.CREATED);
     }
 
@@ -80,14 +81,14 @@ public class CuentaController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PutMapping("/{cuentaId}")
-    public ResponseEntity<Cuenta> actualizarCuenta(
+    public ResponseEntity<SuccessResponseDTO> actualizarCuenta(
             @PathVariable @Positive(message = "El ID de la cuenta debe ser un número positivo") Long cuentaId,
             @Valid @RequestBody Cuenta cuentaActualizado) {
 
         logger.info("Datos de la cuenta a actualizar: {}", cuentaActualizado.toString());
         Optional<Cuenta> cuentaExistente = cuentaService.obtenerCuentaPorId(cuentaId);
         cuentaActualizado.setNumeroCuenta(cuentaId);
-        Cuenta cuentaGuardado = cuentaService.guardarCuenta(cuentaActualizado);
+        SuccessResponseDTO cuentaGuardado = cuentaService.guardarCuenta(cuentaActualizado);
         return new ResponseEntity<>(cuentaGuardado, HttpStatus.OK);
     }
 

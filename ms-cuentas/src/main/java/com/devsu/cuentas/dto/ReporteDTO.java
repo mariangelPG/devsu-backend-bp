@@ -7,7 +7,6 @@ import java.util.List;
 
 public class ReporteDTO {
     private Long clienteId;
-    private String nombreCliente;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fechaInicio;
@@ -32,14 +31,6 @@ public class ReporteDTO {
 
     public void setClienteId(Long clienteId) {
         this.clienteId = clienteId;
-    }
-
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
     }
 
     public Date getFechaInicio() {
@@ -78,7 +69,6 @@ public class ReporteDTO {
     public String toString() {
         return "ReporteDTO{" +
                 "clienteId=" + clienteId +
-                ", nombreCliente='" + nombreCliente + '\'' +
                 ", fechaInicio=" + fechaInicio +
                 ", fechaFin=" + fechaFin +
                 ", fechaGeneracion=" + fechaGeneracion +

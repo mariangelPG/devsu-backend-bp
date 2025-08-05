@@ -1,5 +1,6 @@
 package com.devsu.cuentas.service;
 
+import com.devsu.cuentas.dto.SuccessResponseDTO;
 import com.devsu.cuentas.exception.*;
 import com.devsu.cuentas.model.Cuenta;
 import com.devsu.cuentas.repository.CuentaRepository;
@@ -25,13 +26,13 @@ public class CuentaService {
      * @param cuenta
      * @return objeto cuenta
      */
-    public Cuenta guardarCuenta(Cuenta cuenta) {
+    public SuccessResponseDTO guardarCuenta(Cuenta cuenta) {
         try{
 
             Cuenta cuentaGuardada = cuentaRepository.save(cuenta);
             logger.info("Cliente guardado exitosamente con ID: {}", cuentaGuardada.getClienteId());
+            return new SuccessResponseDTO("Cuenta guardada exitosamente con ID"+ cuentaGuardada.getNumeroCuenta(), true);
 
-            return cuentaGuardada;
         } catch (CuentaValidationException ex) {
             logger.warn("Error de validación al guardar cuenta: {}", ex.getMessage());
             throw ex;

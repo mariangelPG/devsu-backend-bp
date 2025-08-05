@@ -1,5 +1,6 @@
 package com.devsu.cuentas.controller;
 
+import com.devsu.cuentas.dto.SuccessResponseDTO;
 import com.devsu.cuentas.model.Movimiento;
 import com.devsu.cuentas.service.MovimientoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,9 +39,9 @@ public class MovimientoController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PostMapping
-    public ResponseEntity<Movimiento> crearMovimiento(@Valid @RequestBody Movimiento movimiento){
+    public ResponseEntity<SuccessResponseDTO> crearMovimiento(@Valid @RequestBody Movimiento movimiento){
         logger.info("Datos del movimiento a crear: {}", movimiento.toString());
-        Movimiento movimientoGuardado = movimientoService.guardarMovimiento(movimiento);
+        SuccessResponseDTO movimientoGuardado = movimientoService.guardarMovimiento(movimiento);
         return new ResponseEntity<>(movimientoGuardado, HttpStatus.CREATED);
     }
 
@@ -77,14 +78,14 @@ public class MovimientoController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PutMapping("/{movimientoId}")
-    public ResponseEntity<Movimiento> actualizarCuenta(
+    public ResponseEntity<SuccessResponseDTO> actualizarCuenta(
             @PathVariable @Positive(message = "El ID del movimiento debe ser un número positivo") Long movimientoId,
             @Valid @RequestBody Movimiento movimientoActualizado) {
 
         logger.info("Datos del movimiento a actualizar: {}", movimientoActualizado.toString());
         Optional<Movimiento> movimientoExistente = movimientoService.obtenerMovimientoPorId(movimientoId);
         movimientoActualizado.setId(movimientoId);
-        Movimiento cuentaGuardado = movimientoService.guardarMovimiento(movimientoActualizado);
+        SuccessResponseDTO cuentaGuardado = movimientoService.guardarMovimiento(movimientoActualizado);
         return new ResponseEntity<>(cuentaGuardado, HttpStatus.OK);
     }
 }
