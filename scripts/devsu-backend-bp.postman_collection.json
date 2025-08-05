@@ -1,0 +1,310 @@
+{
+	"info": {
+		"_postman_id": "6048b976-90c3-4bcd-9e60-b9b5b87b9555",
+		"name": "devsu-backend-bp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15986482",
+		"_collection_link": "https://www.postman.com/crimson-meadow-939259/workspace/devsu/collection/15986482-6048b976-90c3-4bcd-9e60-b9b5b87b9555?action=share&source=collection_link&creator=15986482"
+	},
+	"item": [
+		{
+			"name": "ms-clientes",
+			"item": [
+				{
+					"name": "Agregar Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Vic Garcia\",\n  \"genero\": \"Masculino\",\n  \"edad\": 27,\n  \"identificacion\": \"123456789\",\n  \"direccion\": \"Calle Falsa 123\",\n  \"telefono\": \"04123008494\",\n  \"contrasena\": \"1LosPega*\",\n  \"estado\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host-clientes}}:{{port-clientes}}/clientes",
+							"protocol": "http",
+							"host": [
+								"{{host-clientes}}"
+							],
+							"port": "{{port-clientes}}",
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host-clientes}}:{{port-clientes}}/clientes/52",
+							"protocol": "http",
+							"host": [
+								"{{host-clientes}}"
+							],
+							"port": "{{port-clientes}}",
+							"path": [
+								"clientes",
+								"52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Cliente",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n    \"nombre\": \"Juanito Perez\"\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host-clientes}}:{{port-clientes}}/clientes/1",
+							"protocol": "http",
+							"host": [
+								"{{host-clientes}}"
+							],
+							"port": "{{port-clientes}}",
+							"path": [
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{host-clientes}}:{{port-clientes}}/clientes/1",
+							"protocol": "http",
+							"host": [
+								"{{host-clientes}}"
+							],
+							"port": "{{port-clientes}}",
+							"path": [
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar parcialmente",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Manuel Mochi\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host-clientes}}:{{port-clientes}}/clientes/102",
+							"protocol": "http",
+							"host": [
+								"{{host-clientes}}"
+							],
+							"port": "{{port-clientes}}",
+							"path": [
+								"clientes",
+								"102"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ms-cuentas",
+			"item": [
+				{
+					"name": "Cuentas",
+					"item": [
+						{
+							"name": "Agregar Cuenta",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"numeroCuenta\": \"11112223\",\n  \"tipoCuenta\": \"Corriente\",\n  \"saldoInicial\": 3000.00,\n  \"estado\": true,\n  \"clienteId\": 52\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/cuentas",
+									"protocol": "http",
+									"host": [
+										"{{host-cuentas}}"
+									],
+									"port": "{{port-cuentas}}",
+									"path": [
+										"cuentas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Cuentas por cliente",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/cuentas/cliente/52",
+									"protocol": "http",
+									"host": [
+										"{{host-cuentas}}"
+									],
+									"port": "{{port-cuentas}}",
+									"path": [
+										"cuentas",
+										"cliente",
+										"52"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Cuenta por id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/cuentas/id/11112223",
+									"protocol": "http",
+									"host": [
+										"{{host-cuentas}}"
+									],
+									"port": "{{port-cuentas}}",
+									"path": [
+										"cuentas",
+										"id",
+										"11112223"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Movimientos",
+					"item": [
+						{
+							"name": "Agregar Movimiento",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tipo\": \"Debito\",\n    \"valor\": \"4000.00\", \n    \"cuentaId\": \"11112222\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/movimientos",
+									"protocol": "http",
+									"host": [
+										"{{host-cuentas}}"
+									],
+									"port": "{{port-cuentas}}",
+									"path": [
+										"movimientos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener todos los movimientos de una cuenta",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/movimientos/cuenta/11112223",
+									"protocol": "http",
+									"host": [
+										"{{host-cuentas}}"
+									],
+									"port": "{{port-cuentas}}",
+									"path": [
+										"movimientos",
+										"cuenta",
+										"11112223"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Reportes",
+					"item": [
+						{
+							"name": "Obtener cuentas movimientos por cliente",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/reportes?fecha=2025-08-01/2025-08-04&cliente=2",
+									"protocol": "http",
+									"host": [
+										"{{host-cuentas}}"
+									],
+									"port": "{{port-cuentas}}",
+									"path": [
+										"reportes"
+									],
+									"query": [
+										{
+											"key": "fecha",
+											"value": "2025-08-01/2025-08-04"
+										},
+										{
+											"key": "cliente",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

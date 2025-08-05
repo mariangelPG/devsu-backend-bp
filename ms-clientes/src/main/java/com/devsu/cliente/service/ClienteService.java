@@ -22,6 +22,11 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    /**
+     * Guarda a un nuevo cliente
+     * @param cliente
+     * @return objeto cliente
+     */
     public Cliente guardarCliente(Cliente cliente) {
         try{
             validarCliente(cliente);
@@ -41,6 +46,11 @@ public class ClienteService {
         }
     }
 
+    /**
+     * Obtiene un cliente en base a un ID
+     * @param clienteId
+     * @return Objeto cliente
+     */
     public Optional<Cliente> obtenerClientePorId(Long clienteId) {
 
         try{
@@ -59,6 +69,10 @@ public class ClienteService {
 
     }
 
+    /**
+     * Elimina a un cliente en base a un ID
+     * @param clienteId
+     */
     public void eliminarCliente(Long clienteId) {
 
         try{
@@ -76,6 +90,12 @@ public class ClienteService {
         }
     }
 
+    /**
+     * Actualiza un cliente en base a unos cuantos campos
+     * @param clienteExistente
+     * @param clienteNuevo
+     * @return
+     */
     public Cliente actualizarCampos(Cliente clienteExistente, Cliente clienteNuevo){
 
         try{
@@ -106,6 +126,11 @@ public class ClienteService {
 
     }
 
+    /**
+     * Codifica la contrasena para que no se guarde en claro
+     * @param contrasena
+     * @return
+     */
     public String encode (String contrasena){
         Base64.Encoder encoder = Base64.getEncoder();
         return encoder.encodeToString(contrasena.getBytes());

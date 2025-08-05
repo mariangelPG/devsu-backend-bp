@@ -24,6 +24,11 @@ public class MovimientoService {
     @Autowired
     private CuentaService cuentaService;
 
+    /**
+     * Guarda un movimiento nuevo
+     * @param movimiento
+     * @return
+     */
     public Movimiento guardarMovimiento(Movimiento movimiento){
         try {
             Cuenta cuenta = cuentaService.obtenerCuentaPorId(movimiento.getCuentaId()).get();
@@ -59,6 +64,11 @@ public class MovimientoService {
     }
 
 
+    /**
+     * Obtiene el detalle de un movimiento en base a su ID
+     * @param movimientoId
+     * @return
+     */
     public Optional<Movimiento> obtenerMovimientoPorId(Long movimientoId) {
 
         try{
@@ -76,6 +86,11 @@ public class MovimientoService {
 
     }
 
+    /**
+     * Obtiene la lista de movimientos de una cuenta especifica
+     * @param cuentaId
+     * @return
+     */
     public List<Movimiento> obtenerMovimientosPorCuentaId(Long cuentaId) {
         try{
             return movimientoRepository.findByCuentaId(cuentaId);
@@ -86,6 +101,13 @@ public class MovimientoService {
 
     }
 
+    /**
+     * Obtiene los movimientos de una cuenta en base a un rango de fechas
+     * @param cuentaId
+     * @param fechaInicio
+     * @param fechafin
+     * @return
+     */
     public List<Movimiento> obtenerMovimientosPorCuentaIdFecha(Long cuentaId, Date fechaInicio, Date fechafin) {
         try{
             return movimientoRepository.findByCuentaIdAndFechaBetweenOrderByFechaDesc(cuentaId, fechaInicio, fechafin);
@@ -96,6 +118,11 @@ public class MovimientoService {
 
     }
 
+    /**
+     * Obtiene el saldo actual para poder actualizar los movimientos
+     * @param cuentaId
+     * @return
+     */
     public Double obtenerSaldoActual(Long cuentaId) {
         logger.debug("Obteniendo saldo actual para cuenta ID: {}", cuentaId);
 
@@ -118,6 +145,13 @@ public class MovimientoService {
         }
     }
 
+    /**
+     * Calcula el nuevo saldo en base al tipo de movimiento
+     * @param saldoActual
+     * @param valor
+     * @param tipo
+     * @return
+     */
     private Double calcularNuevoSaldo(Double saldoActual, Double valor, String tipo) {
         if ("Credito".equals(tipo) || "Deposito".equals(tipo)) {
             return saldoActual + Math.abs(valor);

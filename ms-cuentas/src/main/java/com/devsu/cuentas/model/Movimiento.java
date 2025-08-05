@@ -45,6 +45,15 @@ public class Movimiento {
     @Schema(description = "Identificador de la cuenta a la que pertenece el movimiento.", example = "1234567890")
     private Long cuentaId;
 
+    public Movimiento(Date fecha, String tipo, Double valor, Double saldo, Long cuentaId) {
+        this.fecha = fecha;
+        this.tipo = tipo;
+        this.valor = valor;
+        this.saldo = saldo;
+        this.cuentaId = cuentaId;
+    }
+
+    public Movimiento(){}
 
     public Date getFecha() {
         return fecha;

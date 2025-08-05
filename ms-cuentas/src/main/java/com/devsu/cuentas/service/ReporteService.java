@@ -1,9 +1,7 @@
 package com.devsu.cuentas.service;
 
 import com.devsu.cuentas.dto.CuentaReporteDTO;
-import com.devsu.cuentas.dto.MovimientoReporteDTO;
 import com.devsu.cuentas.dto.ReporteDTO;
-import com.devsu.cuentas.exception.CuentaNotFoundException;
 import com.devsu.cuentas.model.Cuenta;
 import com.devsu.cuentas.model.Movimiento;
 import org.slf4j.Logger;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +25,13 @@ public class ReporteService {
     @Autowired
     private MovimientoService movimientoService;
 
+    /**
+     * Genera el reporte de los movimientos por cuentas de un usuario especifico
+     * @param clienteId
+     * @param fechaInicio
+     * @param fechaFin
+     * @return
+     */
     public ReporteDTO generarReporteCuentasMovimientos(Long clienteId, Date fechaInicio, Date fechaFin){
         try{
 
@@ -51,6 +55,13 @@ public class ReporteService {
         }
     }
 
+    /**
+     * Funcion que procesa la cuenta para asignarle el movimiento
+     * @param cuenta
+     * @param fechaInicio
+     * @param fechaFin
+     * @return
+     */
     public CuentaReporteDTO procesarCuentas(Cuenta cuenta, Date fechaInicio, Date fechaFin){
         List<Movimiento> listaMovimientos = movimientoService.obtenerMovimientosPorCuentaIdFecha(cuenta.getNumeroCuenta(), fechaInicio, fechaFin);
         CuentaReporteDTO cuentaReporte = new CuentaReporteDTO(cuenta.getNumeroCuenta(), cuenta.getTipoCuenta(), cuenta.getSaldoInicial(), cuenta.getEstado());
@@ -59,6 +70,11 @@ public class ReporteService {
         return cuentaReporte;
     }
 
+    /**
+     * Funcion que parsea el rango de fechas recibida en el URL de la peticion
+     * @param rangoFechas
+     * @return
+     */
     public String[] parsearRangoFechas(String rangoFechas) {
         if (rangoFechas == null || rangoFechas.trim().isEmpty()) {
             throw new IllegalArgumentException("El rango de fechas no puede estar vacío");

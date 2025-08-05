@@ -20,6 +20,11 @@ public class CuentaService {
     @Autowired
     private CuentaRepository cuentaRepository;
 
+    /**
+     * Guarda una cuenta nueva
+     * @param cuenta
+     * @return objeto cuenta
+     */
     public Cuenta guardarCuenta(Cuenta cuenta) {
         try{
             Cuenta cuentaGuardada = cuentaRepository.save(cuenta);
@@ -38,6 +43,11 @@ public class CuentaService {
         }
     }
 
+    /**
+     * Obtiene el detalle de una cuenta en base al ID de la cuenta
+     * @param cuentaId
+     * @return
+     */
     public Optional<Cuenta> obtenerCuentaPorId(Long cuentaId) {
 
         try{
@@ -55,6 +65,11 @@ public class CuentaService {
 
     }
 
+    /**
+     * Obtiene la lista de cuentas dado un ID de cliente
+     * @param clienteId
+     * @return
+     */
     public List<Cuenta> obtenerCuentasPorClienteId(Long clienteId) {
         try{
             List<Cuenta> listaCuentas = cuentaRepository.findByClienteId(clienteId);
