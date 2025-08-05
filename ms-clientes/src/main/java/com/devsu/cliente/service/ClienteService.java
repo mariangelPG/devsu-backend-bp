@@ -1,0 +1,147 @@
+package com.devsu.cliente.service;
+
+import com.devsu.cliente.dto.ClienteDTO;
+import com.devsu.cliente.dto.SuccessResponseDTO;
+import com.devsu.cliente.exception.ClienteNotFoundException;
+import com.devsu.cliente.exception.ClienteValidationException;
+import com.devsu.cliente.model.Cliente;
+import com.devsu.cliente.repository.ClienteRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import java.util.Base64;
+
+import java.util.Optional;
+
+@Service
+public class ClienteService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClienteService.class);
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    /**
+     * Guarda a un nuevo cliente
+     * @param cliente
+     * @return objeto cliente
+     */
+    public SuccessResponseDTO guardarCliente(Cliente cliente) {
+        try{
+            SuccessResponseDTO respuesta = new SuccessResponseDTO();
+            validarCliente(cliente);
+
+            cliente.setContrasena(encode(cliente.getContrasena()));
+
+            Cliente clienteGuardado = clienteRepository.save(cliente);
+            logger.info("Cliente guardado exitosamente con ID: {}", clienteGuardado.getClienteId());
+
+            respuesta.setMensaje("Cliente guardado exitosamente con ID: "+ clienteGuardado.getClienteId());
+            respuesta.setEstado(true);
+            return respuesta;
+        }catch (DataAccessException ex){
+            logger.error("Error de acceso a datos al guardar cliente: {}", ex.getMessage(), ex);
+            throw new RuntimeException("Error al acceder a la base de datos", ex);
+        }catch (Exception e) {
+            logger.error("Error inesperado al guardar cliente: {}", e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    /**
+     * Obtiene un cliente en base a un ID
+     * @param clienteId
+     * @return Objeto cliente
+     */
+    public Optional<Cliente> obtenerClientePorId(Long clienteId) {
+
+        try{
+            Optional<Cliente> cliente = clienteRepository.findById(clienteId);
+
+            if (!cliente.isPresent()) {
+                logger.info("Cliente no encontrado con ID: {}", clienteId);
+                throw new ClienteNotFoundException("El ID no existe");
+            }
+
+            return cliente;
+        } catch (DataAccessException e) {
+            logger.error("Error de acceso a datos al buscar cliente con ID {}: {}", clienteId, e.getMessage(), e);
+            throw new RuntimeException("Error al acceder a la base de datos", e);
+        }
+
+    }
+
+    /**
+     * Elimina a un cliente en base a un ID
+     * @param clienteId
+     */
+    public void eliminarCliente(Long clienteId) {
+
+        try{
+            if (!clienteRepository.existsById(clienteId)) {
+                logger.warn("Intento de eliminar cliente inexistente con ID: {}", clienteId);
+                throw new ClienteNotFoundException(clienteId);
+            }
+
+            clienteRepository.deleteById(clienteId);
+            logger.info("Cliente eliminado exitosamente con ID: {}", clienteId);
+
+        } catch (DataAccessException e) {
+            logger.error("Error de acceso a datos al eliminar cliente con ID {}: {}", clienteId, e.getMessage(), e);
+            throw new RuntimeException("Error al acceder a la base de datos", e);
+        }
+    }
+
+    /**
+     * Actualiza un cliente en base a unos cuantos campos
+     * @param clienteExistente
+     * @param clienteNuevo
+     * @return
+     */
+    public SuccessResponseDTO actualizarCampos(Cliente clienteExistente, Cliente clienteNuevo){
+
+        try{
+            SuccessResponseDTO respuesta = new SuccessResponseDTO();
+
+            if (clienteExistente == null || clienteNuevo == null) {
+                logger.error("El cliente enviado, o el cliente existente es null en actualizarCampos");
+                throw new ClienteValidationException("Cliente no puede ser null");
+            }
+
+            ClienteDTO.llenarCliente(clienteExistente, clienteNuevo);
+            validarCliente(clienteExistente);
+
+            Cliente clienteActualizado = clienteRepository.save(clienteExistente);
+            logger.info("Cliente actualizado exitosamente con ID: {}", clienteActualizado.getClienteId());
+
+            respuesta.setMensaje("Cliente actualizado exitosamente con ID: "+ clienteNuevo.getClienteId());
+            respuesta.setEstado(true);
+            return respuesta;
+
+        }catch (DataAccessException e){
+            logger.error("Error de acceso a datos al actualizar cliente ID {}: {}", clienteExistente.getClienteId(), e.getMessage(), e);
+            throw new RuntimeException("Error al acceder a la base de datos", e);
+        }
+    }
+
+    private void validarCliente(Cliente cliente) {
+
+        if (cliente == null) {
+            throw new ClienteValidationException("Cliente no puede ser null");
+        }
+
+    }
+
+    /**
+     * Codifica la contrasena para que no se guarde en claro
+     * @param contrasena
+     * @return
+     */
+    public String encode (String contrasena){
+        Base64.Encoder encoder = Base64.getEncoder();
+        return encoder.encodeToString(contrasena.getBytes());
+    }
+
+}
