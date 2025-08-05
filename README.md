@@ -117,7 +117,7 @@ cd ms-clientes
 - `GET /movimientos/cuenta/{id}` - Obtener todos los movimientos de una cuenta
 - `POST /movimientos` - Registrar movimiento
 - `PUT /movimientos/{id}` - Actualizar un movimiento
-- `GET /reportes?fecha=[yyyy-MM-dd_yyyy-MM-dd]&cliente=` - Obtiene todas las cuentas de un cliente, con sus movimientos por rango de fecha.
+- `GET /reportes?fecha=[yyyy-MM-dd_yyyy-MM-dd]&cliente={id}` - Obtiene todas las cuentas de un cliente, con sus movimientos por rango de fecha.
 
 ## Logs
 
