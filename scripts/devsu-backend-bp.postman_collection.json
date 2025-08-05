@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"nombre\": \"Vic Garcia\",\n  \"genero\": \"Masculino\",\n  \"edad\": 27,\n  \"identificacion\": \"123456789\",\n  \"direccion\": \"Calle Falsa 123\",\n  \"telefono\": \"04123008494\",\n  \"contrasena\": \"1LosPega*\",\n  \"estado\": true\n}",
+							"raw": "{\n  \"nombre\": \"Ophy\",\n  \"genero\": \"Femenino\",\n  \"edad\": 28,\n  \"identificacion\": \"123456789\",\n  \"direccion\": \"Calle Falsa 123\",\n  \"telefono\": \"04123008494\",\n  \"contrasena\": \"1LosPega*\",\n  \"estado\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -44,7 +44,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host-clientes}}:{{port-clientes}}/clientes/52",
+							"raw": "http://{{host-clientes}}:{{port-clientes}}/clientes/1",
 							"protocol": "http",
 							"host": [
 								"{{host-clientes}}"
@@ -52,7 +52,7 @@
 							"port": "{{port-clientes}}",
 							"path": [
 								"clientes",
-								"52"
+								"1"
 							]
 						}
 					},
@@ -65,7 +65,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n    \"nombre\": \"Juanito Perez\"\n }",
+							"raw": "{\n  \"nombre\": \"Juanito Perez\",\n  \"genero\": \"Masculino\",\n  \"edad\": 28,\n  \"identificacion\": \"123456789\",\n  \"direccion\": \"Calle Falsa 123\",\n  \"telefono\": \"04123008494\",\n  \"contrasena\": \"1LosPega*\",\n  \"estado\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -151,7 +151,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"numeroCuenta\": \"11112223\",\n  \"tipoCuenta\": \"Corriente\",\n  \"saldoInicial\": 3000.00,\n  \"estado\": true,\n  \"clienteId\": 52\n}",
+									"raw": "{\n  \"numeroCuenta\": \"101012\",\n  \"tipoCuenta\": \"Ahorros\",\n  \"saldoInicial\": 3000.00,\n  \"estado\": true,\n  \"clienteId\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -178,7 +178,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/cuentas/cliente/52",
+									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/cuentas/cliente/1",
 									"protocol": "http",
 									"host": [
 										"{{host-cuentas}}"
@@ -187,7 +187,7 @@
 									"path": [
 										"cuentas",
 										"cliente",
-										"52"
+										"1"
 									]
 								}
 							},
@@ -199,7 +199,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/cuentas/id/11112223",
+									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/cuentas/id/101011",
 									"protocol": "http",
 									"host": [
 										"{{host-cuentas}}"
@@ -208,7 +208,7 @@
 									"path": [
 										"cuentas",
 										"id",
-										"11112223"
+										"101011"
 									]
 								}
 							},
@@ -226,7 +226,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"tipo\": \"Debito\",\n    \"valor\": \"4000.00\", \n    \"cuentaId\": \"11112222\"\n}",
+									"raw": "{\n    \"tipo\": \"Retiro\",\n    \"valor\": \"75.00\", \n    \"cuentaId\": \"101012\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -253,7 +253,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/movimientos/cuenta/11112223",
+									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/movimientos/cuenta/101012",
 									"protocol": "http",
 									"host": [
 										"{{host-cuentas}}"
@@ -262,7 +262,7 @@
 									"path": [
 										"movimientos",
 										"cuenta",
-										"11112223"
+										"101012"
 									]
 								}
 							},
@@ -279,7 +279,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/reportes?fecha=2025-08-01/2025-08-04&cliente=2",
+									"raw": "http://{{host-cuentas}}:{{port-cuentas}}/reportes?fecha=2025-08-01_2025-08-04&cliente=1",
 									"protocol": "http",
 									"host": [
 										"{{host-cuentas}}"
@@ -291,11 +291,11 @@
 									"query": [
 										{
 											"key": "fecha",
-											"value": "2025-08-01/2025-08-04"
+											"value": "2025-08-01_2025-08-04"
 										},
 										{
 											"key": "cliente",
-											"value": "2"
+											"value": "1"
 										}
 									]
 								}

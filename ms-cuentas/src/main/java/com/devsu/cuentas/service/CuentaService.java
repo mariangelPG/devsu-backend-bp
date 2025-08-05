@@ -31,7 +31,7 @@ public class CuentaService {
 
             Cuenta cuentaGuardada = cuentaRepository.save(cuenta);
             logger.info("Cliente guardado exitosamente con ID: {}", cuentaGuardada.getClienteId());
-            return new SuccessResponseDTO("Cuenta guardada exitosamente con ID"+ cuentaGuardada.getNumeroCuenta(), true);
+            return new SuccessResponseDTO("Cuenta guardada exitosamente con ID: "+ cuentaGuardada.getNumeroCuenta(), true);
 
         } catch (CuentaValidationException ex) {
             logger.warn("Error de validación al guardar cuenta: {}", ex.getMessage());

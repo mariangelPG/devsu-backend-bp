@@ -1,5 +1,6 @@
 package com.devsu.account.service;
 
+import com.devsu.cuentas.dto.SuccessResponseDTO;
 import com.devsu.cuentas.exception.CuentaNotFoundException;
 import com.devsu.cuentas.model.Cuenta;
 import com.devsu.cuentas.repository.CuentaRepository;
@@ -43,14 +44,15 @@ public class CuentaServiceTest {
         listaCuentas = Collections.singletonList(cuentaValida);
     }
 
+
     @Test
-    void guardarCuenta_Exitoso() {
+    void guardarCuenta_debeRetornarSuccessResponseDTO_cuandoCuentaEsValida() {
+
         when(cuentaRepository.save(any(Cuenta.class))).thenReturn(cuentaValida);
-
-        Cuenta resultado = cuentaService.guardarCuenta(cuentaValida);
-
-        assertNotNull(resultado);
-        assertEquals(cuentaValida.getNumeroCuenta(), resultado.getNumeroCuenta());
+        SuccessResponseDTO response = cuentaService.guardarCuenta(cuentaValida);
+        assertNotNull(response);
+        assertTrue(response.getEstado());
+        assertEquals("Cuenta guardada exitosamente con ID: " + cuentaValida.getNumeroCuenta(), response.getMensaje());
         verify(cuentaRepository, times(1)).save(any(Cuenta.class));
     }
 
